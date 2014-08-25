@@ -1,28 +1,90 @@
 <!doctype html>
-<html lang="en" ng-app>
+<!--
+The ng-app attribute represents an Angular directive ngApp. Flags the html 
+element that Angular should consider to be the root element of the application
+That way, you can tell if the entire page or just a portion of it is an angular
+application
+-->
+<!--
+specificed an Angular module, where phonecatApp is the name of the module
+ng-controller must be at the HTML point, because <title> must be within that scope.
+-->
+<html lang="en" ng-app="phonecatApp" ng-controller="PhoneListCtrl">
 <head>
   <meta charset="utf-8">
-  <title>Google Phone Gallery</title>
+  <title ng-bind-template="Google Phone Gallery: {{query}}">Google Phone Gallery: {{query}}</title>
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="css/app.css">
   <script src="bower_components/angular/angular.js"></script>
+  <script src="js/controllers.js"></script>
 </head>
 <body>
 
-  <ul>
-    <li>
-      <span>Nexus S</span>
-      <p>
-        Fast just got faster with Nexus S.
-      </p>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <!--Sidebar content-->
+            <!-- data-binding: when the page loads, angular binds the name of the
+            input box  to a variable of the same name in the data model and keeps
+            the two in sync -->
+            Search: <input ng-model="query">
+            <p>Your query is: {{ query }}</p>
+            Sort by:
+            <!--  Angular creates a two-way data-binding between the <select ng-model="orderProp"> model. then it's used as the input for the filter -->
+            <!-- the databinding works such that since "age" is the default, the UI
+            will automatically select "newest" as the option -->
+            <select ng-model="orderProp">
+                <option value="name">Alphabetical</option>
+                <option value="age">Newest</option>
+            </select>
+            <p>Ordering: {{ orderProp }}</p>
+
+        </div>
+        <div class="col-md-10">
+
+<!--Body content-->
+<ul class="phones">
+    <!-- ngRepeat Angular directive that tells Angular to create a <li> for each
+    phone in the list -->
+    <!--filter function to process the input. uses the "query" value to create
+    a new array that contains only those records that match query -->
+    <!-- chained with filter orderBy that takes an input array, copies it, and
+    reorders the copy which is then returned
+    -->
+    <li ng-repeat="phone in phones | filter:query | orderBy:orderProp">
+        <!-- {{ }} denote bindings which are referring to the application model
+        set up in the PhoneListCtrl controller -->
+        {{ phone.name }}
+        <p>{{ phone.snippet }}</p>
     </li>
-    <li>
-      <span>Motorola XOOM™ with Wi-Fi</span>
-      <p>
-        The Next, Next Generation tablet.
-      </p>
-    </li>
-  </ul>
+</ul>
+
+        </div><!-- .col-md-10 -->
+    </div><!-- .row -->
+</div><!-- .container-fluid -->
+
+<hr />
+
+<pre>{{phones | json}}</pre>
+
+<hr />
+
+<p>Total number of phones: {{ phones.length }}</p>
+
+<p>Hello, {{name}}!</p>
+
+<table>
+    <tr><th>row number</th></tr>
+    <tr ng-repeat="i in [0, 1, 2, 3, 4, 5, 6, 7]"><td>{{ i + 1 }}</td></tr>
+</table>
+
+<!--
+{{ }} curly binding tells Angular that it should evaluate an expression and
+insert the result into the DOM in place of the binding.
+-->
+  <p>Nothing here {{'yet' + '!'}}</p>
+  <p>1 + 2 = {{ 1 + 2 }}</p>
 
 </body>
 </html>
