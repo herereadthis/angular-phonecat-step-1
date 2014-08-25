@@ -52,11 +52,17 @@ ng-controller must be at the HTML point, because <title> must be within that sco
     <!-- chained with filter orderBy that takes an input array, copies it, and
     reorders the copy which is then returned
     -->
-    <li ng-repeat="phone in phones | filter:query | orderBy:orderProp">
+    <li ng-repeat="phone in phones | filter:query | orderBy:orderProp" class="thumbnail">
         <!-- {{ }} denote bindings which are referring to the application model
         set up in the PhoneListCtrl controller -->
-        {{ phone.name }}
-        <p>{{ phone.snippet }}</p>
+        <!-- ngSrc direct prevents browser from treating directive literally and instead
+        treats it as a request to an invalid url 
+        http://localhost:8000/app/{{phone.imageUrl}}
+        that's why we're not doing <img src="{{phone.imageUrl}}">
+         -->
+        <a href="#/phones/{{phone.id}}" class="thumb"><img ng-src="{{phone.imageUrl}}"></a>
+        <a href="#/phones/{{phone.id}}">{{phone.name}}</a>
+        <p>{{phone.snippet}}</p>
     </li>
 </ul>
 
