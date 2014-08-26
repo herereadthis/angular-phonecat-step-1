@@ -4,8 +4,7 @@
 /*
 A controller is a constructor function that takes a $scope parameter
 */
-// var phonecatApp = angular.module('phonecatApp', []);
-var phonecatControllers = angular.module('phonecatControllers', []);
+var phonecatApp = angular.module('phonecatApp', []);
 /*
 The data model is an array of phones as an object literal, instantiated within
 the PhoneListCtrl controller
@@ -29,38 +28,17 @@ $http service allows to make a HTTP request to web server, declared as a depende
 manageed by DI (dependency injection) subsystem
 returns a promise object with a success method
 */
-
-
-phonecatControllers.controller('PhoneListCtrl', ['$scope', '$http',
-    function ($scope, $http) {
-        $http.get('phones/phones.json').success(function(data) {
-            $scope.phones = data;
-        });
-
-        $scope.orderProp = 'age';
-        $scope.name = "World";
-    }
-]);
-// remember from app.js when('/phones/:phoneId'... the ":" notation is extracted
-// to $routeParams object
-phonecatControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams',
-    function($scope, $routeParams) {
-        $scope.phoneId = $routeParams.phoneId;
-    }
-]);
-
-
 // must name the dependencies to allow for minification
-// phonecatApp.controller('PhoneListCtrl', ['$scope', '$http',
-//     function ($scope, $http) {
-//     $http.get('phones/phones.json').success(function(data) {
-//         // $scope.phones = data;
-//         // pre-process the result by limiting
-//         $scope.phones = data.splice(0, 5);
-//     });
-//     $scope.orderProp = 'age';
-//     $scope.name = "World";
-// }]);
+phonecatApp.controller('PhoneListCtrl', ['$scope', '$http',
+    function ($scope, $http) {
+    $http.get('phones/phones.json').success(function(data) {
+        // $scope.phones = data;
+        // pre-process the result by limiting
+        $scope.phones = data.splice(0, 5);
+    });
+    $scope.orderProp = 'age';
+    $scope.name = "World";
+}]);
 
 // phonecatApp.controller('PhoneListCtrl', function ($scope) {
 //     $scope.phones = [

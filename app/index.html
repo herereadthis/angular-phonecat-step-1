@@ -15,11 +15,13 @@ ng-controller must be at the HTML point, because <title> must be within that sco
   <title ng-bind-template="Google Phone Gallery: {{query}}">Google Phone Gallery: {{query}}</title>
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="css/app.css">
-  <script src="bower_components/angular/angular.js"></script>
   <!-- defines the angular ngRoute model -->
+  <!--
+  <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="js/app.js"></script>
   <script src="js/controllers.js"></script>
+-->
 </head>
 <body>
 
@@ -27,5 +29,6 @@ ng-controller must be at the HTML point, because <title> must be within that sco
 
 <div ng-view></div>
 
+<script data-main="js/main" src="bower_components/requirejs/require.js"></script>
 </body>
 </html>
